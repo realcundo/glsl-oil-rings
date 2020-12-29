@@ -20,12 +20,19 @@ float ring(vec2 coord,vec2 center,float radius,float edge,float displacement){
 }
 
 void main(){
+    
     vec2 coords=(gl_FragCoord.xy/u_resolution-.5)*2.;
     vec2 mouse_coords=(u_mouse/u_resolution-.5)*2.;
     
-    float d1=sin(u_time+coords.y*5.1)*.5;
-    float d2=sin(.5+u_time+coords.y*5.)*.5;
-    float d3=sin(1.+u_time+coords.y*4.9)*.5;
+    float aspect_ratio=u_resolution.y/u_resolution.x;
+    coords.y*=aspect_ratio;
+    mouse_coords.y*=aspect_ratio;
+    
+    float d1=sin(u_time+coords.y*5.1)*.25;
+    float d2=sin(.5+u_time*1.1+coords.y*5.)*.25;
+    float d3=sin(1.+u_time*.9+coords.y*4.9)*.25;
+    
+    //d1=d2=d3=0.;
     
     float r=ring(+coords,+mouse_coords,50.,2.8,d1);
     float g=ring(+coords,-mouse_coords,50.,2.8,d2);
